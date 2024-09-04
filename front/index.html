@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LABA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Pixelify+Sans:wght@400..700&family=SUSE:wght@100..800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Pixelify Sans", sans-serif;
+        }
+
+        body{
+            background-color: #ffe5ec;
+
+        }
+
+        header {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            grid-column-gap: 0px;
+            grid-row-gap: 0px;
+        }
+
+        .credits { grid-area: 1 / 1 / 2 / 5; }
+        .group { grid-area: 1 / 5 / 2 / 6; }
+        .id { grid-area: 2 / 5 / 3 / 6; }
+
+        main {
+            display: grid;
+            height: 600px;
+            grid-template-columns: auto auto;
+        }
+
+
+
+        .thirdColumn {
+
+
+            height: auto;
+
+            display: grid;
+            grid-template-columns: auto;
+            grid-template-rows: repeat(4, auto);
+
+        }
+
+        .canvasContainer {
+            width: 100%;
+            display: grid;
+            place-content: center;
+            place-items: center;
+            grid-template-rows: 20% 50%;
+
+            canvas {
+                border: black solid;
+                border-radius: 10%;
+            }
+
+            p {
+                height: 50%;
+            }
+
+
+        }
+
+        .variables {
+
+            background-color:#ffd3e4 ;
+            height: 100%;
+            width: 100%;
+            display: grid;
+            grid-template-rows: 42% auto;
+            place-items: center;
+            margin: 10px;
+            border-radius: 10%;
+        }
+
+        .form {
+
+            height: 100%;
+            width: 100%;
+            display: grid;
+            grid-template-columns: auto auto 200px;
+
+            place-items: center;
+        }
+
+        .footer {
+            height: 600px;
+
+        }
+
+
+
+    </style>
+
+
+</head>
+<body>
+
+<header>
+<h1 class="credits">Федоров Евгений Константинович</h1>
+<h1 class="group">P3210</h1>
+<h1 class="id">488124</h1>
+</header>
+
+
+
+<main>
+    <div class="variables">
+        <p>Variables</p>
+        <form class="form">
+
+            <label for="xSelection">x
+                <select id="xSelection">
+                    <option value="-3">-3</option>
+                    <option value="-2">-2</option>
+                    <option value="-1">-1</option>
+                    <option value="0">-3</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </label>
+            <div>
+                <label for="y">y
+                    <input type="text" name="y" id="y">
+                </label>
+            </div>
+            <div class="thirdColumn">
+                <p>R</p>
+                <label for="r1"><input type="checkbox" value="1" id="r1" class="checkboxes">1</label>
+                <label for="r2"><input type="checkbox" value="1" id="r2" class="checkboxes">2</label>
+                <label for="r3"><input type="checkbox" value="1" id="r3" class="checkboxes">3</label>
+                <label for="r4"><input type="checkbox" value="1" id="r4" class="checkboxes">4</label>
+            </div>
+            <button type="submit">Отправить</button>
+        </form>
+    </div>
+
+    <div class="canvasContainer">
+        <p>Graphic</p>
+        <canvas width="400" height="400" id="canvas"></canvas>
+    </div>
+</main>
+<div class="footer">
+
+
+</div>
+
+
+<script src="index.js"></script>
+</body>
+</html>
