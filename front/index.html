@@ -44,7 +44,6 @@
 
 
             height: auto;
-
             display: grid;
             grid-template-columns: auto;
             grid-template-rows: repeat(4, auto);
@@ -63,10 +62,13 @@
                 border-radius: 10%;
             }
 
-            p {
-                height: 50%;
-            }
 
+
+        }
+
+
+        .canvasContainer p{
+            height: 50%;
 
         }
 
@@ -116,14 +118,14 @@
 <main>
     <div class="variables">
         <p>Variables</p>
-        <form class="form">
+        <form class="form" onsubmit="return sendInfo(this)">
 
             <label for="xSelection">x
                 <select id="xSelection">
                     <option value="-3">-3</option>
                     <option value="-2">-2</option>
                     <option value="-1">-1</option>
-                    <option value="0">-3</option>
+                    <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -132,15 +134,15 @@
             </label>
             <div>
                 <label for="y">y
-                    <input type="text" name="y" id="y">
+                    <input type="text" name="y" id="y" oninput="this">
                 </label>
             </div>
             <div class="thirdColumn">
                 <p>R</p>
-                <label for="r1"><input type="checkbox" value="1" id="r1" class="checkboxes">1</label>
-                <label for="r2"><input type="checkbox" value="1" id="r2" class="checkboxes">2</label>
-                <label for="r3"><input type="checkbox" value="1" id="r3" class="checkboxes">3</label>
-                <label for="r4"><input type="checkbox" value="1" id="r4" class="checkboxes">4</label>
+                <label for="r1"><input type="radio" value="1" id="r1" class="checkboxes" name="Radius">1</label>
+                <label for="r2"><input type="radio" value="2" id="r2" class="checkboxes" name="Radius">2</label>
+                <label for="r3"><input type="radio" value="3" id="r3" class="checkboxes" name="Radius">3</label>
+                <label for="r4"><input type="radio" value="4" id="r4" class="checkboxes" name="Radius">4</label>
             </div>
             <button type="submit">Отправить</button>
         </form>
@@ -156,7 +158,7 @@
 
 </div>
 
-
-<script src="index.js"></script>
+<script src="script.js"></script>
+<script src="canvas.js"></script>
 </body>
 </html>
