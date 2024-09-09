@@ -1,33 +1,44 @@
-function checkNumberValue(y) {
-    if (y <= -3 || y >= 5) {
-        return false;
+function submitForm(event) {
+    event.preventDefault();
+    let xHTML = document.getElementById("xSelection").value;
+    let yHTML = document.getElementById("ySelection").value;
+    let rHTML = document.querySelector('input[type="radio"]:checked').value;
+    if (isNaN(parseFloat(yHTML)) || !checkValue(parseFloat(yHTML)) || !rHTML) {
+        return;
     }
-    return true;
+    const yValue = parseFloat(yHTML);
+    const xValue = parseFloat(xHTML);
+    const rValue = parseFloat(rHTML);
+
+    const requestContent = {
+        "method": "post",
+
+        "headers": {
+            "content-type": "application/json",
+        },
+
+        "body": JSON.stringify({
+            x: xValue,
+            y: yValue,
+            r: rValue
+        })
+
+    };
+
+    const url = "http://localhost:8080/api";
+
+    let responseData;
+
+     fetch(url, requestContent).then(response => response.json()).then(data => responseData = data);
+
+     let newY = responseData.y
+
 
 }
 
 
-function sendInfo(element) {
-    const y = parseFloat(element.y.value);
-    const x = parseInt(element.xSelection.value);
-    const r = parseInt(element.Radius.value);
-    if (isNaN(y) || !checkNumberValue(y)) {
-        alert("Enter a valid number")
-    }
-
-
-
-
-}
-
-
-
-
-
-
-
-function checkNumberValue(y) {
-    if (y <= -3 || y >= 5) {
+function checkValue(value) {
+    if (-3 > value || value > 5) {
         return false;
     }
     return true;

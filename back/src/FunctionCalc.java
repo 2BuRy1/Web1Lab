@@ -1,39 +1,41 @@
 public class FunctionCalc {
 
 
+    private boolean isTriangle(int x, double y, int r) {
 
-    private boolean isTriangle(int x, int y, int r){
-        int x1 = -1;
+        //координаты вершин трегольника
+        int x1 = r;
         int y1 = 0;
         int x2 = 0;
-        int y2 = 0;
+        int y2 = -r / 2;
         int x3 = 0;
-        int y3 = -1;
+        int y3 = 0;
 
-        //проверка суммой площадей
-        float s = r*r*Math.abs(x1*(y2-y3)+x2*(y3-y1)+x3*(y1-y2));
-        float s1 = Math.abs(x*(r*y1-r*y2)+r*x1*(r*y2-y)+x2*(y-r*y1));
-        float s2 = Math.abs(x*(r*y2-r*y3)+r*x2*(r*y3-y)+x3*(y-r*y2));
-        float s3 = Math.abs(x*(r*y3-r*y1)+r*x3*(r*y1-y)+r*x1*(y-r*y3));
+        //формулы площадей
+        var S = 1 / 2 * r / 2 * r;
+        var S1 = 1 / 2 * Math.abs(x * (y2 - y3) + x2 * (y3 - y) + x3 * (y - y2));
+        var S2 = 1 / 2 * Math.abs(x1 * (y - y3) + x * (y3 - y1) + x3 * (y1 - y));
+        var S3 = 1 / 2 * Math.abs(x1 * (y2 - y) + x2 * (y - y1) + x * (y1 - y2));
 
-        return s==(s1+s2+s3);
+        if (x * r >= 0 && y * r <= 0 && S == S1 + S2 + S3) {
+            return true;
+        }
+        return false;
     }
 
 
-    private boolean isCircle(int x, int y, int r){
-        if( x * r >=0 && y * r <= 0 && Math.sqrt(x * x + y * y) <= r){
+    private boolean isCircle(int x, double y, int r) {
+        if( x * r <=0 && y * r <= 0 && Math.sqrt(x * x + y * y) <= r ){
             return true;
         }
-
-
         return false;
 
 
     }
 
 
-    private boolean isRectangle(int x, int y, int r) {
-        if(  x * r >= 0 && y * r <= 0  && Math.abs(x) <= r && 2 * Math.abs(y) <= r){
+    private boolean isRectangle(int x, double y, int r) {
+        if(x * r >= 0 && y * r >= 0 && y <=r && x <=r/2){
             return true;
         }
 
@@ -42,20 +44,15 @@ public class FunctionCalc {
     }
 
 
-
-    public boolean isInTheSpot(int x, int y, int r){
-        if (x > 3 || x < -3 || y > 5 || y < -3){
+    public boolean isInTheSpot(int x, double y, int r) {
+        if (y > 5 || y < -3) {
             return false;
         }
-        if(isCircle(x, y, r) || isTriangle(x, y, r) || isRectangle(x, y, r)){
+        if (isCircle(x, y, r) || isTriangle(x, y, r) || isRectangle(x, y, r)) {
             return true;
         }
         return false;
     }
-
-
-
-
 
 
 }
