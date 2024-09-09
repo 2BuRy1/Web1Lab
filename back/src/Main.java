@@ -11,7 +11,7 @@ public class Main {
         ResponseSender responseSender = new ResponseSender(functionCalc, requestHandler);
 
 
-        Server server = new Server(responseSender, functionCalc);
+        Server server = new Server(responseSender);
 
 
         server.run();

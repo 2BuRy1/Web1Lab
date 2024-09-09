@@ -24,44 +24,34 @@ public class ResponseSender {
         var fcgiInterface = new FCGIInterface();
         logger.info("Waiting for requests...");
         while (fcgiInterface.FCGIaccept() >= 0) {
-            var values = requestHandler.readRequest();
+            float[] values = null;
+
+                values = requestHandler.readRequest();
             logger.info("Request received! %s, %s, %s".formatted(values[0], values[1], values[2]));
-            var status = functionCalc.isInTheSpot((int) values[0], (double) values[1], (int) values[2]);
+            var status = functionCalc.isInTheSpot((int) values[0], values[1], (int)values[2]);
             var start = System.nanoTime();
             var content = """
                     {
-                    status: %s,
-                    time: %.3f.
+                    
+                    "status": %s,
+                    "time": %s
+                    
                     }
                     """;
-
-            if(status) {
+                var end = System.nanoTime();
+                content = content.formatted(status, String.format( "%.3f",(double) (end - start)/1000000));
                 var httpResponse = """
                         HTTP/1.1 200 OK
                         Content-Type: application/json
                         Content-Length: %d
-                         
+                        
                         %s
                         """.formatted(content.getBytes(StandardCharsets.UTF_8).length, content);
 
-            var end = System.nanoTime();
-                    content = content.formatted("true", (end - start));
                 logger.warning("Good request!");
                 System.out.println(httpResponse);
-            }
-            else{
-                var httpResponse = """
-                        HTTP/1.1 403 BAD REQUEST
-                        Content-Type: application/json
-                        Content-Length: %d
-                         
-                        %s
-                        """.formatted(content.getBytes(StandardCharsets.UTF_8).length, content);
-                var end = System.nanoTime();
-                content = content.formatted("false", (end - start));
-                logger.warning("Bad request!");
-                System.out.println(httpResponse);
-            }
+
+
 
 
         }

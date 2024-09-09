@@ -29,9 +29,13 @@ function submitForm(event) {
 
     let responseData;
 
-     fetch(url, requestContent).then(response => response.json()).then(data => responseData = data);
+     fetch(url, requestContent).then(response => response.json()).then(data => {
+        console.log(data.status);
+        console.log(data.time);
 
-     console.log(responseData);
+         }
+     );
+
 
 
 }
