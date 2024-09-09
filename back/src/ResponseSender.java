@@ -2,22 +2,31 @@ import com.fastcgi.FCGIInterface;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.logging.Logger;
 
 public class ResponseSender {
 
     private final FunctionCalc functionCalc;
 
-    public ResponseSender(FunctionCalc functionCalc) {
+    Logger logger = LoggerConfig.getLogger(this.getClass().getName());
+
+    private final RequestHandler requestHandler;
+
+    public ResponseSender(FunctionCalc functionCalc, RequestHandler requestHandler) {
         this.functionCalc = functionCalc;
+        this.requestHandler = requestHandler;
     }
 
 
-    public void sendResponse(float[] values) throws IOException {
+    public void sendResponse() throws IOException {
 
 
         var fcgiInterface = new FCGIInterface();
+        logger.info("Waiting for requests...");
         while (fcgiInterface.FCGIaccept() >= 0) {
-            boolean status = functionCalc.isInTheSpot((int) values[0], values[1], (int) values[2]);
+           logger.info("Request received!");
+            var values = requestHandler.readRequest();
+            var status = functionCalc.isInTheSpot((int) values[0], (double) values[1], (int) values[2]);
             var start = System.nanoTime();
             var content = """
                     {
@@ -36,6 +45,7 @@ public class ResponseSender {
 
             var end = System.nanoTime();
                     content = content.formatted("true", (end - start));
+                logger.warning("Good request!");
                 System.out.println(httpResponse);
             }
             else{
@@ -48,6 +58,7 @@ public class ResponseSender {
                         """.formatted(content.getBytes(StandardCharsets.UTF_8).length, content);
                 var end = System.nanoTime();
                 content = content.formatted("false", (end - start));
+                logger.warning("Bad request!");
                 System.out.println(httpResponse);
             }
 

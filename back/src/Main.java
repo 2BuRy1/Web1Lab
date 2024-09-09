@@ -8,10 +8,10 @@ public class Main {
 
         RequestHandler requestHandler = new RequestHandler();
 
-        ResponseSender responseSender = new ResponseSender(functionCalc);
+        ResponseSender responseSender = new ResponseSender(functionCalc, requestHandler);
 
 
-        Server server = new Server(requestHandler, responseSender, functionCalc);
+        Server server = new Server(responseSender, functionCalc);
 
 
         server.run();
