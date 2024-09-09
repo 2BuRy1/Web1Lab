@@ -1,6 +1,10 @@
+import java.util.logging.Logger;
+
 public class FunctionCalc {
 
 
+
+    Logger logger = LoggerConfig.getLogger(this.getClass().getName());
     private boolean isTriangle(int x, double y, int r) {
 
         //координаты вершин трегольника
@@ -46,11 +50,15 @@ public class FunctionCalc {
 
     public boolean isInTheSpot(int x, double y, int r) {
         if (y > 5 || y < -3) {
+            logger.warning("Returned false : x=%d, y=%f, r=%d".formatted( x, y, r));
             return false;
         }
         if (isCircle(x, y, r) || isTriangle(x, y, r) || isRectangle(x, y, r)) {
+            logger.info("Returned true");
             return true;
         }
+        logger.warning("Returned false");
+        logger.warning("Returned false : x=%d, y=%f, r=%d".formatted( x, y, r));
         return false;
     }
 

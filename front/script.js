@@ -25,13 +25,13 @@ function submitForm(event) {
 
     };
 
-    const url = "http://localhost:8080/api";
+    const url = "/api/";
 
     let responseData;
 
      fetch(url, requestContent).then(response => response.json()).then(data => responseData = data);
 
-     let newY = responseData.y
+     console.log(responseData);
 
 
 }

@@ -24,8 +24,8 @@ public class ResponseSender {
         var fcgiInterface = new FCGIInterface();
         logger.info("Waiting for requests...");
         while (fcgiInterface.FCGIaccept() >= 0) {
-           logger.info("Request received!");
             var values = requestHandler.readRequest();
+            logger.info("Request received! %s, %s, %s".formatted(values[0], values[1], values[2]));
             var status = functionCalc.isInTheSpot((int) values[0], (double) values[1], (int) values[2]);
             var start = System.nanoTime();
             var content = """
@@ -34,9 +34,10 @@ public class ResponseSender {
                     time: %.3f.
                     }
                     """;
+
             if(status) {
                 var httpResponse = """
-                        HTTP/2 200 OK
+                        HTTP/1.1 200 OK
                         Content-Type: application/json
                         Content-Length: %d
                          
@@ -50,7 +51,7 @@ public class ResponseSender {
             }
             else{
                 var httpResponse = """
-                        HTTP/2 403 BAD REQUEST
+                        HTTP/1.1 403 BAD REQUEST
                         Content-Type: application/json
                         Content-Length: %d
                          
