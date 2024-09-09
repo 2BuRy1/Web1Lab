@@ -48,7 +48,7 @@ public class ResponseSender {
                         %s
                         """.formatted(content.getBytes(StandardCharsets.UTF_8).length, content);
 
-                logger.warning("Good request!");
+                  logger.warning("status: %s".formatted(status));
                 System.out.println(httpResponse);
 
 

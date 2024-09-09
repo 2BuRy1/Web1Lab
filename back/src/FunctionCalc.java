@@ -29,7 +29,7 @@ public class FunctionCalc {
 
 
     private boolean isCircle(int x, double y, int r) {
-        if( x * r <=0 && y * r <= 0 && Math.sqrt(x * x + y * y) <= r ){
+        if( x * r <=0 && y * r >= 0 && Math.sqrt(x * x + y * y) <= r ){
             return true;
         }
         return false;
