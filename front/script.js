@@ -14,7 +14,7 @@ async function submitForm(event) {
     const xValue = parseInt(xHTML);
     const rValue = parseInt(rHTML);
 
-    drawDote(xValue, yValue, rValue);
+    drawDot(xValue, yValue, rValue);
 
 
     const requestContent = {
@@ -61,7 +61,6 @@ function appendData(item, x ,y ,r){
     let thead = document.querySelector("table thead");
     let RequestStatus = document.querySelector("status")
     RequestStatus.innerHTML = '';
-
 
         const row = document.createElement("tr");
 
@@ -110,7 +109,7 @@ function appendData(item, x ,y ,r){
 
 
 
-function drawDote(xValue , yValue , rValue) {
+function drawDot(xValue , yValue , rValue) {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
 
