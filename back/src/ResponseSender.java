@@ -24,9 +24,8 @@ public class ResponseSender {
         var fcgiInterface = new FCGIInterface();
         logger.info("Waiting for requests...");
         while (fcgiInterface.FCGIaccept() >= 0) {
-            float[] values = null;
 
-                values = requestHandler.readRequest();
+               var values = requestHandler.readRequest();
             logger.info("Request received! %s, %s, %s".formatted(values[0], values[1], values[2]));
             var status = functionCalc.isInTheSpot((int) values[0], values[1], (int)values[2]);
             var start = System.nanoTime();
@@ -39,7 +38,7 @@ public class ResponseSender {
                     }
                     """;
                 var end = System.nanoTime();
-                content = content.formatted(status, String.format( "%.3f",(double) (end - start)/1000000));
+                content = content.formatted(status, String.format( "%.4f",(double) (end - start)/1000000));
                 var httpResponse = """
                         HTTP/1.1 200 OK
                         Content-Type: application/json

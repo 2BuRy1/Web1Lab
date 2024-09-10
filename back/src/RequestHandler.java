@@ -24,17 +24,14 @@ public class RequestHandler {
 
 
         float[] values = new float[3];
-
-        if (elements.length != 4) {
-            return new float[]{-20, -20, -20};
-        }
+        
         try {
             values[0] = Float.parseFloat((elements[1].split(",")[0]));
             values[1] = Float.parseFloat((elements[2].split(",")[0]));
             values[2] = Float.parseFloat(elements[3].split("}")[0].replace("}", ""));
             return values;
         } catch (Exception e) {
-            return new float[]{-20, -20, -20};
+            return new float[]{-228, -228, -228};
         }
 
     }

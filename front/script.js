@@ -1,7 +1,7 @@
 
 
 
-function submitForm(event) {
+async function submitForm(event) {
     event.preventDefault();
     let xHTML = document.getElementById("xSelection").value;
     let yHTML = document.getElementById("ySelection").value;
@@ -15,9 +15,6 @@ function submitForm(event) {
     const rValue = parseInt(rHTML);
 
     drawDote(xValue, yValue, rValue);
-
-
-
 
 
     const requestContent = {
@@ -38,12 +35,12 @@ function submitForm(event) {
     const url = "/api/";
 
 
-     fetch(url, requestContent).then(response => response.json()).then(data => {
-        console.log(data.status);
+    fetch(url, requestContent).then(response => response.json()).then(data => {
         console.log(data.time);
+        appendData(data, xValue, yValue, rValue);
+        }
+    );
 
-         }
-     );
 
 
 
@@ -57,6 +54,59 @@ function checkValue(value) {
     return true;
 
 }
+
+
+function appendData(item, x ,y ,r){
+    let body = document.querySelector("table tbody");
+    let thead = document.querySelector("table thead");
+    let RequestStatus = document.querySelector("status")
+    RequestStatus.innerHTML = '';
+
+
+        const row = document.createElement("tr");
+
+        const Xcell = document.createElement("td");
+        Xcell.textContent = x;
+        row.appendChild(Xcell);
+
+        const Ycell = document.createElement("td");
+        Ycell.textContent = y;
+        row.appendChild(Ycell);
+
+        const Rcell = document.createElement("td");
+        Rcell.textContent = r;
+        row.appendChild(Rcell);
+
+        const status = document.createElement("td");
+
+        item.status === true ? status.textContent = "Попадание" : status.textContent = "Промах";
+        row.appendChild(status);
+
+        const CurrentTime = document.createElement("td");
+        CurrentTime.textContent = new Date().toLocaleDateString() + ":" + new Date().toLocaleTimeString();
+        row.appendChild(CurrentTime);
+
+        const SpentTime = document.createElement("td");
+        SpentTime.textContent = item.time;
+        row.appendChild(SpentTime);
+
+        body.appendChild(row);
+        thead.classList.add('visible');
+
+        let statusText = document.createElement("h2");
+        if(item.status){
+            statusText.textContent = "Попадание";
+            RequestStatus.style.color = "green";
+        }
+        else{
+            statusText.textContent = "Промах"
+            RequestStatus.style.color = "red";
+        }
+        RequestStatus.classList.add('visible');
+        RequestStatus.appendChild(statusText);
+
+}
+
 
 
 
