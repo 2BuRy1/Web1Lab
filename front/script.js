@@ -89,7 +89,7 @@ function appendData(item, x ,y ,r){
         SpentTime.textContent = item.time;
         row.appendChild(SpentTime);
 
-        body.appendChild(row);
+        body.prepend(row);
         thead.classList.add('visible');
 
         let statusText = document.createElement("h2");
