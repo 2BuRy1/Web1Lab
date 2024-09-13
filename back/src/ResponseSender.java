@@ -21,10 +21,11 @@ public class ResponseSender {
     public void sendResponse() throws IOException {
 
 
+
         var fcgiInterface = new FCGIInterface();
         logger.info("Waiting for requests...");
         while (fcgiInterface.FCGIaccept() >= 0) {
-            var start = System.nanoTime();
+            var start = System.currentTimeMillis();
 
             var values = requestHandler.readRequest();
             logger.info("Request received! %s, %s, %s".formatted(values[0], values[1], values[2]));
@@ -33,13 +34,16 @@ public class ResponseSender {
                     {
                     
                     "status": %s,
-                    "time": %s
+                    "time": %s,
+                    "x": %d,
+                    "y": %f,
+                    "r": %d
                     
                     }
                     """;
-                var end = System.nanoTime();
-                content = content.formatted(status, String.format( "%.4f",(double) (end - start)/1000000));
-                var httpResponse = """
+            var end = System.currentTimeMillis();
+            content = content.formatted(status, String.format( "%.4f",(double) (end - start)/1000), (int) values[0], values[1], (int)values[2]);
+            var httpResponse = """
                         HTTP/1.1 200 OK
                         Content-Type: application/json
                         Content-Length: %d
@@ -47,8 +51,8 @@ public class ResponseSender {
                         %s
                         """.formatted(content.getBytes(StandardCharsets.UTF_8).length, content);
 
-                  logger.warning("status: %s".formatted(status));
-                System.out.println(httpResponse);
+            logger.warning("status: %s".formatted(status));
+            System.out.println(httpResponse);
         }
     }
 }

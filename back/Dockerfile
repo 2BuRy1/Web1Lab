@@ -14,6 +14,6 @@ RUN echo "Class-Path: lib/fastCGI.jar" >> manifest.txt
 
 RUN jar -cvfm myapp.jar manifest.txt -C src/ . -C lib fastCGI.jar
 
-EXPOSE 2448
+EXPOSE 9000
 
-CMD ["java", "-DFCGI_PORT=2448", "-jar", "myapp.jar"]
+CMD ["java", "-DFCGI_PORT=9000", "-jar", "myapp.jar"]

@@ -37,7 +37,7 @@ async function submitForm(event) {
 
     fetch(url, requestContent).then(response => response.json()).then(data => {
         console.log(data.time);
-        appendData(data, xValue, yValue, rValue);
+        appendData(data);
         }
     );
 
@@ -56,7 +56,7 @@ function checkValue(value) {
 }
 
 
-function appendData(item, x ,y ,r){
+function appendData(item){
     let body = document.querySelector("table tbody");
     let thead = document.querySelector("table thead");
     let RequestStatus = document.querySelector("status")
@@ -65,15 +65,15 @@ function appendData(item, x ,y ,r){
         const row = document.createElement("tr");
 
         const Xcell = document.createElement("td");
-        Xcell.textContent = x;
+        Xcell.textContent = item.x;
         row.appendChild(Xcell);
 
         const Ycell = document.createElement("td");
-        Ycell.textContent = y;
+        Ycell.textContent = item.y;
         row.appendChild(Ycell);
 
         const Rcell = document.createElement("td");
-        Rcell.textContent = r;
+        Rcell.textContent = item.r;
         row.appendChild(Rcell);
 
         const status = document.createElement("td");
