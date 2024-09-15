@@ -6,14 +6,21 @@ async function submitForm(event) {
     let xHTML = document.getElementById("xSelection").value;
     let yHTML = document.getElementById("ySelection").value;
     let rHTML = document.querySelector('input[type="radio"]:checked').value;
-
+    let validateHTML = document.querySelector("validate");
+    validateHTML.innerHTML = ' ';
+    const validateMessage = document.createElement("h2");
     if (isNaN(parseFloat(yHTML)) || !checkValue(parseFloat(yHTML)) || !rHTML) {
+        validateMessage.textContent="Данные не валидны";
+        validateHTML.style.color = "red";
         return;
     }
+    validateMessage.textContent = "Данные валидны";
+    validateMessage.style.color = "green";
     const yValue = parseFloat(yHTML);
     const xValue = parseInt(xHTML);
     const rValue = parseInt(rHTML);
 
+    validateHTML.appendChild(validateMessage);
     drawDot(xValue, yValue, rValue);
 
 
