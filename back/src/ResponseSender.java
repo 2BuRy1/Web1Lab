@@ -23,10 +23,10 @@ public class ResponseSender {
 
 
         var fcgiInterface = new FCGIInterface();
+
         logger.info("Waiting for requests...");
         while (fcgiInterface.FCGIaccept() >= 0) {
             var start = System.currentTimeMillis();
-
             var values = requestHandler.readRequest();
             logger.info("Request received! %s, %s, %s".formatted(values[0], values[1], values[2]));
             var status = functionCalc.isInTheSpot((int) values[0], values[1], (int)values[2]);

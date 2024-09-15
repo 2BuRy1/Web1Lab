@@ -3,24 +3,26 @@
 
 async function submitForm(event) {
     event.preventDefault();
-    let xHTML = document.getElementById("xSelection").value;
-    let yHTML = document.getElementById("ySelection").value;
-    let rHTML = document.querySelector('input[type="radio"]:checked').value;
-    let validateHTML = document.querySelector("validate");
-    validateHTML.innerHTML = ' ';
-    const validateMessage = document.createElement("h2");
-    if (isNaN(parseFloat(yHTML)) || !checkValue(parseFloat(yHTML)) || !rHTML) {
-        validateMessage.textContent="Данные не валидны";
-        validateHTML.style.color = "red";
+    let xHTML = document.getElementById("xSelection");
+    let yHTML = document.getElementById("ySelection");
+    let rHTML = document.querySelector('input[type="radio"]:checked');
+
+    xHTML.classList.remove('error');
+
+    yHTML.classList.remove('error');
+    if (isNaN(parseFloat(yHTML.value)) || !checkValue(parseFloat(yHTML.value)) || !rHTML) {
+
+        xHTML.classList.add('error');
+        yHTML.classList.add('error');
+
         return;
     }
-    validateMessage.textContent = "Данные валидны";
-    validateMessage.style.color = "green";
-    const yValue = parseFloat(yHTML);
-    const xValue = parseInt(xHTML);
-    const rValue = parseInt(rHTML);
 
-    validateHTML.appendChild(validateMessage);
+    const yValue = parseFloat(yHTML.value);
+    const xValue = parseInt(xHTML.value);
+    const rValue = parseInt(rHTML.value);
+
+
     drawDot(xValue, yValue, rValue);
 
 
@@ -39,11 +41,10 @@ async function submitForm(event) {
 
     };
 
-    const url = "/api/";
+    const url = '/api/';
 
 
     fetch(url, requestContent).then(response => response.json()).then(data => {
-        console.log(data.time);
         appendData(data);
         }
     );
@@ -68,6 +69,8 @@ function appendData(item){
     let thead = document.querySelector("table thead");
     let RequestStatus = document.querySelector("status")
     RequestStatus.innerHTML = '';
+    if(item.x!==-228 && item.y!==-228 && item.r!==-228) {
+
 
         const row = document.createElement("tr");
 
@@ -89,7 +92,7 @@ function appendData(item){
         row.appendChild(status);
 
         const CurrentTime = document.createElement("td");
-        CurrentTime.textContent = new Date().toLocaleDateString() + ":" + new Date().toLocaleTimeString();
+        CurrentTime.textContent = new Date().toLocaleTimeString();
         row.appendChild(CurrentTime);
 
         const SpentTime = document.createElement("td");
@@ -100,16 +103,24 @@ function appendData(item){
         thead.classList.add('visible');
 
         let statusText = document.createElement("h2");
-        if(item.status){
+        if (item.status) {
             statusText.textContent = "Попадание";
             RequestStatus.style.color = "green";
-        }
-        else{
+        } else {
             statusText.textContent = "Промах"
             RequestStatus.style.color = "red";
         }
         RequestStatus.classList.add('visible');
         RequestStatus.appendChild(statusText);
+    }
+    else{
+        let statusText = document.createElement("h2");
+            statusText.textContent = "Некорректный запрос"
+            RequestStatus.style.color = "red";
+
+        RequestStatus.classList.add('visible');
+        RequestStatus.appendChild(statusText);
+    }
 
 }
 
@@ -131,5 +142,15 @@ function drawDot(xValue , yValue , rValue) {
     ctx.resetTransform();
     ctx.closePath();
 
+
+}
+
+
+function showMessage(y){
+    y.addEventListener("input", function(){
+
+
+
+    })
 
 }

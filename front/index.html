@@ -199,10 +199,10 @@
             filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.5));
         }
 
-        .statusMessages{
-            display: grid;
-            grid-template-columns: auto auto;
-            place-items: flex-start;
+
+        .error{
+            background-color: #ffd3ff;
+
         }
 
 
@@ -239,7 +239,7 @@
             <div>
                 <label for="ySelection">
                     <p>Y</p>
-                    <input type="text" name="y" id="ySelection">
+                    <input type="text" name="y" id="ySelection" required>
                 </label>
             </div>
             <div class="thirdColumn">
@@ -278,12 +278,8 @@
 
 
     </table>
-<div class = "statusMessages">
+
     <status class="status"></status>
-    <validate class="validate"></validate>>
-</div>
-
-
 </footer>
 
 <script src="script.js"></script>

@@ -22,6 +22,9 @@ public class RequestHandler {
         buffer.clear();
 
         var request = new String(requestBodyRaw, StandardCharsets.UTF_8);
+        if(!FCGIInterface.request.params.getProperty("REQUEST_METHOD").equals("POST")){
+            return new float[]{-228, -228, -228};
+        }
         logger.warning("Request without parsing: %s".formatted(request));
         var elements = request.split(":");
 
