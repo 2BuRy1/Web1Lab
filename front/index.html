@@ -139,8 +139,10 @@
 
 
         table {
-            width: 45%;
-            height: 20%;
+            width: 300px;
+            height:fit-content;
+            max-height: 50px;
+            overflow: scroll;
         }
 
         thead {
@@ -204,6 +206,31 @@
             background-color: #ffd3ff;
 
         }
+        
+        .tableContainer{
+            height: fit-content;
+            max-height: 200px;
+            overflow-y: scroll;
+        }
+
+
+        .tableContainer::-webkit-scrollbar {
+            width: 10px;
+            background-color: #f9f9fd;
+        }
+
+        .tableContainer::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background-color: #18aaaa;
+        }
+
+        .tableContainer::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+            border-radius: 10px;
+            background-color: #f9f9fd;
+        }
+
+        
 
 
     </style>
@@ -260,6 +287,7 @@
     </div>
 </main>
 <footer>
+    <div class = 'tableContainer'>
     <table id="table-sector">
         <thead id="table-header">
         <tr>
@@ -278,7 +306,7 @@
 
 
     </table>
-
+    </div>
     <status class="status"></status>
 </footer>
 <script src="canvas.js"></script>
