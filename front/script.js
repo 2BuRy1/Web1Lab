@@ -34,9 +34,9 @@ async function submitForm(event) {
         },
 
         "body": JSON.stringify({
-            x: xValue,
-            y: yValue,
-            r: rValue
+            x: xHTML,
+            y: yHTML,
+            r: rHTML
         })
 
     };
@@ -70,7 +70,7 @@ function appendData(item){
     let RequestStatus = document.querySelector("status")
     RequestStatus.innerHTML = '';
     if(item.x!==-228 && item.y!==-228 && item.r!==-228) {
-
+         console.log(item.x.toString());
 
         const row = document.createElement("tr");
 
