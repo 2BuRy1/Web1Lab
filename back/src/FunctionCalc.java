@@ -5,7 +5,7 @@ public class FunctionCalc {
 
 
     Logger logger = LoggerConfig.getLogger(this.getClass().getName());
-    private boolean isTriangle(int x, double y, int r) {
+    private boolean isTriangle(int x, Double y, int r) {
 
         var equation = r/2*x - r/2;
 
@@ -19,7 +19,7 @@ public class FunctionCalc {
     }
 
 
-    private boolean isCircle(int x, double y, int r) {
+    private boolean isCircle(int x, Double y, int r) {
         if( x * r <=0 && y * r >= 0 && Math.sqrt(x * x + y * y) <= r ){
             return true;
         }
@@ -29,7 +29,7 @@ public class FunctionCalc {
     }
 
 
-    private boolean isRectangle(int x, double y, int r) {
+    private boolean isRectangle(int x, Double y, int r) {
         if(x * r >= 0 && y * r >= 0 && y <=r && x <=r/2){
             return true;
         }
@@ -39,7 +39,7 @@ public class FunctionCalc {
     }
 
 
-    public boolean isInTheSpot(int x, double y, int r) {
+    public boolean isInTheSpot(int x, Double y, int r) {
         if (y > 5 || y < -3) {
             return false;
         }

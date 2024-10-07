@@ -1,3 +1,13 @@
+document.getElementById("ySelection").addEventListener("input", function(e) {
+    let value = e.target.value;
+
+    // Разрешаем только числа и не более 10 знаков после запятой
+    if (!/^\d*\.?\d{0,10}$/.test(value)) {
+        e.target.value = value.slice(0, -1); // Удаляем последний символ
+    }
+});
+
+
 
 
 
@@ -18,7 +28,7 @@ async function submitForm(event) {
         return;
     }
 
-    const yValue = parseFloat(yHTML.value);
+    const yValue = (yHTML.value);
     const xValue = parseInt(xHTML.value);
     const rValue = parseInt(rHTML.value);
 
@@ -34,12 +44,15 @@ async function submitForm(event) {
         },
 
         "body": JSON.stringify({
-            x: xHTML,
-            y: yHTML,
-            r: rHTML
+            x: xValue,
+            y: yHTML.value,
+            r: rValue
         })
 
     };
+
+
+
 
     const url = '/api/';
 

@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 public class RequestHandler {
 
-    private Logger logger = LoggerConfig.getLogger(this.getClass().getName());
+
 
 
     public double[] readRequest() throws IOException {
