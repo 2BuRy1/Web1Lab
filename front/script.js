@@ -177,11 +177,4 @@ function drawDot(xValue , yValue , rValue) {
 }
 
 
-function showMessage(y){
-    y.addEventListener("input", function(){
 
-
-
-    })
-
-}
