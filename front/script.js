@@ -8,14 +8,32 @@ document.getElementById("ySelection").addEventListener("input", function(e) {
 });
 
 
+let checkboxes = document.querySelectorAll(".checkboxes");
 
+checkboxes.forEach(function(checkbox) {
+    checkbox.addEventListener('change', function(event) {
+        checkboxes.forEach(function(cb) {
+            if (cb !== event.target) {
+                cb.checked = false;
+            }
+        });
+    });
+});
 
 
 async function submitForm(event) {
     event.preventDefault();
     let xHTML = document.getElementById("xSelection");
     let yHTML = document.getElementById("ySelection");
-    let rHTML = document.querySelector('input[type="radio"]:checked');
+    let rHTML = Array.from(checkboxes).find(i => i.checked);
+
+
+
+
+
+
+
+
 
     xHTML.classList.remove('error');
 
@@ -37,13 +55,13 @@ async function submitForm(event) {
 
 
     const requestContent = {
-        "method": "post",
+        method: "post",
 
-        "headers": {
+        headers: {
             "content-type": "application/json",
         },
 
-        "body": JSON.stringify({
+        body: JSON.stringify({
             x: xValue,
             y: yHTML.value,
             r: rValue
