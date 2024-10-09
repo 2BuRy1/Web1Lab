@@ -2,7 +2,7 @@ document.getElementById("ySelection").addEventListener("input", function(e) {
     let value = e.target.value;
 
     // Разрешаем только числа и не более 10 знаков после запятой
-    if (!/^\d*\.?\d{0,10}$/.test(value)) {
+    if (!/^-?\d*\.?\d{0,10}$/.test(value)) {
         e.target.value = value.slice(0, -1); // Удаляем последний символ
     }
 });
@@ -38,7 +38,7 @@ async function submitForm(event) {
     xHTML.classList.remove('error');
 
     yHTML.classList.remove('error');
-    if (isNaN(parseFloat(yHTML.value)) || !checkValue(parseFloat(yHTML.value)) || !rHTML) {
+    if (isNaN(parseFloat(yHTML.value)) || !checkValue(parseFloat(yHTML.value)) || !rHTML || !checkR(parseFloat(rHTML.value)) || !checkX(parseFloat(xHTML.value))) {
 
         xHTML.classList.add('error');
         yHTML.classList.add('error');
@@ -46,12 +46,13 @@ async function submitForm(event) {
         return;
     }
 
-    const yValue = (yHTML.value);
+
+
     const xValue = parseInt(xHTML.value);
     const rValue = parseInt(rHTML.value);
 
 
-    drawDot(xValue, yValue, rValue);
+    drawDot(xValue, yHTML.value, rValue);
 
 
     const requestContent = {
@@ -87,10 +88,37 @@ async function submitForm(event) {
 
 
 function checkValue(value) {
+
     if (-3 > value || value > 5) {
         return false;
     }
     return true;
+
+}
+
+function checkR(value){
+
+    let array = [1, 2, 3, 4, 5]
+    for(let i =0 ; i < array.length; i++){
+        if(array[i] === parseFloat(value)) {
+            return true;
+        }
+
+    }
+    return false;
+}
+
+function checkX(value){
+
+    let array = [-3, -2, -1, 0, 1, 2, 3, 4]
+    for(let i =0 ; i < array.length ; i++){
+        if(array[i] === value){
+            return true;
+        }
+    }
+    return false;
+
+
 
 }
 
