@@ -1,20 +1,21 @@
+version: '3'
 networks:
   itmo:
 
 services:
+  front:
+    build:
+      context: ./
+      dockerfile: front/Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - itmo
+
+
   backend:
     build:
       context: ./back
     networks:
       - itmo
 
-  nginx:
-    build:
-      context: ./
-      dockerfile: ./nginx/Dockerfile
-    ports:
-      - "8090:80"
-    depends_on:
-      - backend
-    networks:
-      - itmo
