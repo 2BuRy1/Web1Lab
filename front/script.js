@@ -1,18 +1,17 @@
-document.getElementById("ySelection").addEventListener("input", function(e) {
+document.getElementById("ySelection").addEventListener("input", function (e) {
     let value = e.target.value;
 
-    // Разрешаем только числа и не более 10 знаков после запятой
     if (!/^-?\d*\.?\d{0,10}$/.test(value)) {
-        e.target.value = value.slice(0, -1); // Удаляем последний символ
+        e.target.value = value.slice(0, -1);
     }
 });
 
 
 let checkboxes = document.querySelectorAll(".checkboxes");
 
-checkboxes.forEach(function(checkbox) {
-    checkbox.addEventListener('change', function(event) {
-        checkboxes.forEach(function(cb) {
+checkboxes.forEach(function (checkbox) {
+    checkbox.addEventListener('change', function (event) {
+        checkboxes.forEach(function (cb) {
             if (cb !== event.target) {
                 cb.checked = false;
             }
@@ -21,31 +20,15 @@ checkboxes.forEach(function(checkbox) {
 });
 
 
-async function submitForm(event) {
-    event.preventDefault();
+async function submit() {
+
     let xHTML = document.getElementById("xSelection");
     let yHTML = document.getElementById("ySelection");
     let rHTML = Array.from(checkboxes).find(i => i.checked);
 
-
-
-
-
-
-
-
-
-    xHTML.classList.remove('error');
-
-    yHTML.classList.remove('error');
     if (isNaN(parseFloat(yHTML.value)) || !checkValue(parseFloat(yHTML.value)) || !rHTML || !checkR(parseFloat(rHTML.value)) || !checkX(parseFloat(xHTML.value))) {
-
-        xHTML.classList.add('error');
-        yHTML.classList.add('error');
-
         return;
     }
-
 
 
     const xValue = parseInt(xHTML.value);
@@ -71,17 +54,11 @@ async function submitForm(event) {
     };
 
 
-
-
     const url = '/api/';
 
 
-    fetch(url, requestContent).then(response => response.json()).then(data => {
-        appendData(data);
-        }
-    );
-
-
+    fetch(url, requestContent).then(response => response.json())
+        .then(data => appendData(data)).catch(err => console.error(err));
 
 
 }
@@ -96,11 +73,11 @@ function checkValue(value) {
 
 }
 
-function checkR(value){
+function checkR(value) {
 
     let array = [1, 2, 3, 4, 5]
-    for(let i =0 ; i < array.length; i++){
-        if(array[i] === parseFloat(value)) {
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] === parseFloat(value)) {
             return true;
         }
 
@@ -108,101 +85,96 @@ function checkR(value){
     return false;
 }
 
-function checkX(value){
+function checkX(value) {
 
     let array = [-3, -2, -1, 0, 1, 2, 3, 4]
-    for(let i =0 ; i < array.length ; i++){
-        if(array[i] === value){
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] === value) {
             return true;
         }
     }
     return false;
 
 
-
 }
 
 
-function appendData(item){
-    let body = document.querySelector("table tbody");
-    let thead = document.querySelector("table thead");
+function appendData(item) {
+    let body = document.getElementById("table_body");
+    let thead = document.getElementById("table-header");
     let RequestStatus = document.querySelector("status")
     RequestStatus.innerHTML = '';
-    if(item.x!==-228 && item.y!==-228 && item.r!==-228) {
-         console.log(item.x.toString());
 
-        const row = document.createElement("tr");
+    console.log(item.x.toString());
 
-        const Xcell = document.createElement("td");
-        Xcell.textContent = item.x;
-        row.appendChild(Xcell);
+    const row = document.createElement("tr");
 
-        const Ycell = document.createElement("td");
-        Ycell.textContent = item.y;
-        row.appendChild(Ycell);
+    const Xcell = document.createElement("td");
+    Xcell.textContent = item.x;
+    row.appendChild(Xcell);
 
-        const Rcell = document.createElement("td");
-        Rcell.textContent = item.r;
-        row.appendChild(Rcell);
+    const Ycell = document.createElement("td");
+    Ycell.textContent = item.y;
+    row.appendChild(Ycell);
 
-        const status = document.createElement("td");
+    const Rcell = document.createElement("td");
+    Rcell.textContent = item.r;
+    row.appendChild(Rcell);
 
-        item.status === true ? status.textContent = "Попадание" : status.textContent = "Промах";
-        row.appendChild(status);
+    const status = document.createElement("td");
 
-        const CurrentTime = document.createElement("td");
-        CurrentTime.textContent = new Date().toLocaleTimeString();
-        row.appendChild(CurrentTime);
+    item.status === true ? status.textContent = "Попадание" : status.textContent = "Промах";
+    row.appendChild(status);
 
-        const SpentTime = document.createElement("td");
-        SpentTime.textContent = item.time;
-        row.appendChild(SpentTime);
+    const CurrentTime = document.createElement("td");
+    CurrentTime.textContent = new Date().toLocaleTimeString();
+    row.appendChild(CurrentTime);
 
-        body.prepend(row);
-        thead.classList.add('visible');
+    const SpentTime = document.createElement("td");
+    SpentTime.textContent = item.time;
+    row.appendChild(SpentTime);
 
-        let statusText = document.createElement("h2");
-        if (item.status) {
-            statusText.textContent = "Попадание";
-            RequestStatus.style.color = "green";
-        } else {
-            statusText.textContent = "Промах"
-            RequestStatus.style.color = "red";
-        }
-        RequestStatus.classList.add('visible');
-        RequestStatus.appendChild(statusText);
+    body.prepend(row);
+    thead.classList.add('visible');
+
+    let statusText = document.createElement("h2");
+    if (item.status) {
+        statusText.textContent = "Попадание";
+        RequestStatus.style.color = "green";
+    } else {
+        statusText.textContent = "Промах"
+        RequestStatus.style.color = "red";
     }
-    else{
-        let statusText = document.createElement("h2");
-            statusText.textContent = "Некорректный запрос"
-            RequestStatus.style.color = "red";
+    RequestStatus.classList.add('visible');
+    RequestStatus.appendChild(statusText);
 
-        RequestStatus.classList.add('visible');
-        RequestStatus.appendChild(statusText);
-    }
 
 }
 
 
-
-
-function drawDot(xValue , yValue , rValue) {
+function drawDot(xValue, yValue, rValue) {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
 
-    let plotX = 2 * xValue/ rValue * 50 ;
+    let plotX = 2 * xValue / rValue * 50;
 
-    let plotY = -2 * yValue / rValue * 50 ;
+    let plotY = -2 * yValue / rValue * 50;
     ctx.beginPath();
-    ctx.translate(canvas.width/2, canvas.height/2);
+    ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.arc(plotX, plotY, 5, 0, 2 * Math.PI);
     ctx.fillStyle = 'red';
     ctx.fill();
     ctx.resetTransform();
     ctx.closePath();
 
-
 }
 
+function badMessage() {
+    let RequestStatus = document.querySelector("status")
+    let statusText = document.createElement("h2");
+    RequestStatus.classList.add('visible');
+    RequestStatus.appendChild(statusText);
+
+}
 
 

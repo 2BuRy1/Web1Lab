@@ -4,52 +4,74 @@ public class FunctionCalc {
 
 
 
-    Logger logger = LoggerConfig.getLogger(this.getClass().getName());
-    private boolean isTriangle(int x, Double y, int r) {
+    final Logger logger = LoggerConfig.getLogger(this.getClass().getName());
+    private boolean isTriangle(Dot dot) {
 
-        var equation = r/2*x - r/2;
+        var equation = dot.getR()/2*dot.getX() - dot.getR()/2;
 
-        if(y > 0 || x < 0 || y > equation){
-            logger.info("returned false with arguments: %s, %s, %s".formatted(x, y, r));
+        if(dot.getY() > 0 || dot.getX() < 0 || dot.getY() > equation){
+
             return false;
         }
 
-        logger.info("returned true with arguments: %s, %s, %s".formatted(x, y, r));
         return true;
     }
 
 
-    private boolean isCircle(int x, Double y, int r) {
-        if( x * r <=0 && y * r >= 0 && Math.sqrt(x * x + y * y) <= r ){
-            return true;
-        }
-        return false;
+    private boolean isCircle(Dot dot) {
+        return dot.getX() * dot.getR() <= 0 && dot.getY() * dot.getR() >= 0 && Math.sqrt(dot.getX() * dot.getX() + dot.getY() * dot.getY()) <= dot.getR();
 
 
     }
 
 
-    private boolean isRectangle(int x, Double y, int r) {
-        if(x * r >= 0 && y * r >= 0 && y <=r && x <=r/2){
-            return true;
-        }
-
-        return false;
+    private boolean isRectangle(Dot dot) {
+        return dot.getX() * dot.getR() >= 0 && dot.getY() * dot.getR() >= 0 && dot.getY() <= dot.getR() && dot.getX() <= dot.getR() / 2;
 
     }
 
 
-    public boolean isInTheSpot(int x, Double y, int r) {
-        if (y > 5 || y < -3) {
+    public boolean isInTheSpot(Dot dot) throws Exception {
+        if (!checkY(dot) || !checkR(dot) || !checkX(dot)) {
             return false;
         }
-        if (isCircle(x, y, r) || isTriangle(x, y, r) || isRectangle(x, y, r)) {
+        if (isCircle(dot) || isTriangle(dot) || isRectangle(dot)) {
             logger.info("Returned true");
             return true;
         }
-        logger.warning("Returned false");
-        logger.warning("Returned false : x=%d, y=%f, r=%d".formatted( x, y, r));
+
+        logger.warning("Returned false : x=%d, y=%f, r=%d".formatted(dot.getX(), dot.getY(), dot.getR()));
         return false;
+    }
+
+
+    private boolean checkY(Dot dot) throws Exception {
+        if( dot.getY() <= 5 && dot.getY() >= -3){
+            return true;
+        }
+        throw new Exception("Invalid value");
+    }
+    private boolean checkR(Dot dot) throws Exception {
+
+        int[] array = new int[] {1, 2, 3, 4, 5};
+        for(int i = 0; i < array.length; i++) {
+            if(dot.getR() == array[i]) {
+                return true;
+            }
+        }
+        throw new Exception("Invalid value");
+    }
+
+
+    private boolean checkX(Dot dot) throws Exception {
+        int[] array = new int[] {-3, -2, -1, 0, 1, 2, 3, 4};
+        for(int i = 0; i < array.length; i++) {
+            if(dot.getX() == array[i]) {
+                return true;
+            }
+        }
+        throw new Exception("Invalid value");
+
     }
 
 

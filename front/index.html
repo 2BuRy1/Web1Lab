@@ -117,7 +117,6 @@
         footer {
             display: grid;
             grid-template-columns: 50% 50%;
-            height: 600px;
             justify-items: center;
 
         }
@@ -160,7 +159,6 @@
             animation: ani 1s forwards;
             padding: 0;
             text-align: center;
-            width: 110px;
             height: 70px;
             border: solid black;
             border-radius: 4px;
@@ -251,7 +249,7 @@
 <main>
     <div class="variables">
         <p>Variables</p>
-        <form class="form" id="form" onsubmit="submitForm(event)">
+        <div class="form" id="form" >
 
             <label for="xSelection">
                 <p>X</p><select id="xSelection">
@@ -279,8 +277,8 @@
                 <label for="r4"><input type="checkbox" value="4" id="r4" class="checkboxes" name="Radius">4</label>
                 <label for="r5"><input type="checkbox" value="5" id="r5" class="checkboxes" name="Radius">5</label>
             </div>
-            <button type="submit">Отправить</button>
-        </form>
+            <button type="button" onclick="submit()" >Отправить</button>
+        </div>
     </div>
 
     <div class="canvasContainer">
@@ -301,7 +299,7 @@
             <th>Spent time</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id = "table_body">
 
 
         </tbody>

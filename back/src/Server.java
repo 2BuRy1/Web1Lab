@@ -11,9 +11,8 @@ public class Server {
 
     public void run() throws IOException {
 
-        while (true) {
+
             responseSender.sendResponse();
-        }
     }
 
 }

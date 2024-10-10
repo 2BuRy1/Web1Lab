@@ -3,14 +3,13 @@ import com.fastcgi.FCGIInterface;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
-import java.util.logging.Logger;
 
 public class RequestHandler {
 
 
 
 
-    public double[] readRequest() throws IOException {
+    public Dot readRequest() throws IOException {
         FCGIInterface.request.inStream.fill();
         var contentLength = FCGIInterface.request.inStream.available();
         var buffer = ByteBuffer.allocate(contentLength);
@@ -23,7 +22,7 @@ public class RequestHandler {
 
         var request = new String(requestBodyRaw, StandardCharsets.UTF_8);
         if(!FCGIInterface.request.params.getProperty("REQUEST_METHOD").equals("POST")){
-            return new double[]{-228, -228, -228};
+            throw new RuntimeException();
         }
        return JsonParser.parseJson(request);
 
